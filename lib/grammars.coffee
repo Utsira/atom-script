@@ -188,6 +188,11 @@ module.exports =
         args = ['-c', "kotlinc #{context.filepath} -include-runtime -d /tmp/#{jarName} && java -jar /tmp/#{jarName}"]
         return args
 
+  LaTeX:
+    "File Based":
+      command: "latexmk"
+      args: (context) -> ['-cd', '-quiet', '-pdf', '-pv', '-shell-escape', context.filepath]
+
   LilyPond:
     "File Based":
       command: "lilypond"
@@ -258,13 +263,23 @@ module.exports =
       command: "ncl"
       args: (context) -> [context.filepath]
 
-
   newLISP:
     "Selection Based":
       command: "newlisp"
       args: (context) -> ['-e', context.getCode()]
     "File Based":
       command: "newlisp"
+      args: (context) -> [context.filepath]
+
+  NSIS:
+    "Selection Based":
+      command: "makensis"
+      args: (context) ->
+        code = context.getCode()
+        tmpFile = GrammarUtils.createTempFileWithCode(code)
+        [tmpFile]
+    "File Based":
+      command: "makensis"
       args: (context) -> [context.filepath]
 
   'Objective-C':
@@ -287,7 +302,11 @@ module.exports =
   'Pandoc Markdown':
     "File Based":
       command: "panzer"
+<<<<<<< HEAD
       args: (context) -> [context.filepath, "--output=" + path.basename(context.filepath) + ".pdf"]
+=======
+      args: (context) -> [context.filepath, "--output=" + context.filepath + ".pdf"]
+>>>>>>> rgbkrk/master
 
   PHP:
     "Selection Based":
@@ -439,6 +458,14 @@ module.exports =
     "File Based":
       command: "sml"
       args: (context) -> [context.filepath]
+
+  Nim:
+    "File Based":
+      command: "nim"
+      args: (context) ->
+        file = GrammarUtils.Nim.findNimProjectFile(context.filepath)
+        ['c', '--colors:off', '--verbosity:0', '--parallelBuild:1',
+          '-r', '"' + file + '"']
 
   Swift:
     "File Based":
