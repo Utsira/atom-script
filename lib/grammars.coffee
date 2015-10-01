@@ -287,7 +287,7 @@ module.exports =
   'Pandoc Markdown':
     "File Based":
       command: "panzer"
-      args: (context) -> [context.filepath, "--output=" + context.filepath + ".pdf"]
+      args: (context) -> [context.filepath, "--output=" + path.basename(context.filepath) + ".pdf"]
 
   PHP:
     "Selection Based":
