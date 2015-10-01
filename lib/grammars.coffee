@@ -302,11 +302,7 @@ module.exports =
   'Pandoc Markdown':
     "File Based":
       command: "panzer"
-<<<<<<< HEAD
       args: (context) -> [context.filepath, "--output=" + path.basename(context.filepath) + ".pdf"]
-=======
-      args: (context) -> [context.filepath, "--output=" + context.filepath + ".pdf"]
->>>>>>> rgbkrk/master
 
   PHP:
     "Selection Based":
